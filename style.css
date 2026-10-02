@@ -137,43 +137,121 @@ body {
     margin-bottom: 20px;
 }
 
-.install-block {
-    margin-bottom: var(--section-gap);
+/* Tab navigation */
+.tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--separator);
+    margin-bottom: 20px;
 }
 
-.install-block h3 {
-    font-size: 17px;
-    line-height: 22px;
+.tab-button {
+    font-family: var(--font-system);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--secondary-label);
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    min-height: 44px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.tab-button:hover {
+    color: var(--label);
+}
+
+.tab-button.active {
+    color: var(--label);
     font-weight: 600;
-    margin-bottom: 12px;
 }
 
-.install-block ol {
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--label);
+}
+
+/* Tab content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content ol {
     margin-left: 20px;
     padding-left: 0;
 }
 
-.install-block li {
+.tab-content li {
     font-size: 15px;
     line-height: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 
-.install-block a {
+.tab-content a {
     color: var(--label);
     text-decoration: underline;
 }
 
-.install-block a:hover {
+.tab-content a:hover {
     color: var(--secondary-label);
 }
 
-.install-block code {
+/* Path copy block */
+.path-copy-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 12px;
+    background-color: var(--secondary-background);
+    border: 1px solid var(--separator);
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.copy-path {
     font-family: 'SF Mono', Monaco, 'Courier New', monospace;
     font-size: 14px;
+    color: var(--label);
+}
+
+.copy-arrow {
+    font-size: 14px;
+    color: var(--secondary-label);
+}
+
+.copy-button {
+    font-family: var(--font-system);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--label);
+    background-color: transparent;
+    border: 1px solid var(--separator);
+    border-radius: 6px;
+    padding: 4px 12px;
+    min-height: 28px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: background-color 0.2s ease;
+}
+
+.copy-button:hover {
     background-color: var(--secondary-background);
-    padding: 2px 6px;
-    border-radius: 4px;
+}
+
+.copy-button:active {
+    transform: scale(0.98);
 }
 
 /* Sample section */
@@ -194,69 +272,101 @@ body {
     margin-bottom: 20px;
 }
 
-/* Decision cards */
-.decision-card {
-    background-color: var(--secondary-background);
+/* Decision group */
+.decision-group {
     border: 1px solid var(--separator);
     border-radius: 8px;
-    padding: 16px;
-    margin-bottom: var(--card-gap);
+    overflow: hidden;
 }
 
-.card-field {
-    margin-bottom: 12px;
-}
-
-.card-field:last-child {
-    margin-bottom: 0;
-}
-
-.field-label {
+.group-heading {
     font-size: 13px;
     line-height: 18px;
     font-weight: 600;
     color: var(--secondary-label);
-    margin-bottom: 4px;
+    padding: 12px 16px;
+    background-color: var(--secondary-background);
+    margin: 0;
 }
 
-.field-value {
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 400;
-}
-
-.decision-text {
-    font-weight: 600;
-}
-
-/* Card details (initially hidden) */
-.card-details {
-    margin-top: 12px;
-    padding-top: 12px;
+/* Decision rows */
+.decision-row {
     border-top: 1px solid var(--separator);
 }
 
-/* Show more button - no blue */
-.show-more {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 0 16px;
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--label);
-    background-color: transparent;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: underline;
-    margin-top: 8px;
-    font-family: var(--font-system);
+.decision-row:first-of-type {
+    border-top: none;
 }
 
-.show-more:hover {
+.row-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex-wrap: wrap;
+}
+
+.row-summary:hover {
+    background-color: var(--secondary-background);
+}
+
+.row-severity {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
     color: var(--secondary-label);
+    flex-shrink: 0;
+}
+
+.row-separator {
+    font-size: 13px;
+    color: var(--secondary-label);
+    flex-shrink: 0;
+}
+
+.row-decision {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    color: var(--label);
+    flex: 1;
+    min-width: 0;
+}
+
+.row-done {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    color: var(--secondary-label);
+}
+
+/* Row details */
+.row-details {
+    padding: 12px 16px 16px 16px;
+    background-color: var(--secondary-background);
+    border-top: 1px solid var(--separator);
+}
+
+.detail-field {
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.detail-field:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--label);
+}
+
+.detail-value {
+    font-weight: 400;
+    color: var(--label);
 }
 
 /* Spec patch */
@@ -265,7 +375,22 @@ body {
     border: 1px solid var(--separator);
     border-radius: 8px;
     padding: 16px;
-    margin-top: var(--card-gap);
+    margin-top: 20px;
+}
+
+.spec-patch .field-label {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--secondary-label);
+    margin-bottom: 8px;
+}
+
+.spec-patch .field-value {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--label);
 }
 
 /* Footer */
