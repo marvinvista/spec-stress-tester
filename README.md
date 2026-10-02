@@ -8,19 +8,9 @@ The spec stress-tester finds decisions a PM must make before starting eng: ambig
 
 ## Install in Cursor
 
-### As an Agent Plugin
-
-1. In Cursor, go to Settings → Cursor Plugins
-2. Add this repo URL as a plugin source
-3. Enable the plugin
-
-The skill appears in the agent's available skills.
-
-### As a standalone skill
-
-Copy [`skills/spec-stress-tester/SKILL.md`](skills/spec-stress-tester/SKILL.md) to:
-- `~/.cursor/skills-cursor/` for Cloud Agents
-- Your local skills folder for Codex / Cursor IDE skills
+1. Open this repository in Cursor (clone it or open the folder)
+2. Copy `skills/spec-stress-tester/` into your project's `.cursor/skills/` directory
+3. In chat, ask "Stress this PRD" and paste a PRD or Notion link
 
 ## Usage
 

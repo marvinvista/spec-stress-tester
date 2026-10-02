@@ -1,1 +1,10 @@
-{"name":"spec-stress-tester","description":"Stress a PRD into PM decision cards before eng starts.","skills":["skills/spec-stress-tester"]}
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "spec-stress-tester",
+  "version": "0.1.0",
+  "description": "Stress a PRD into PM decision cards before eng starts.",
+  "author": {
+    "name": "Marvin Vista",
+    "email": "marvin@marvinvista.com"
+  }
+}
