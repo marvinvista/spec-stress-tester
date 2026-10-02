@@ -20,7 +20,6 @@
     --page-padding: 20px;
     --section-gap: 40px;
     --card-gap: 16px;
-    --cta-gap: 12px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -68,61 +67,20 @@ body {
     margin-bottom: 24px;
 }
 
-/* CTA buttons - all three equal, bordered style */
-.cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--cta-gap);
-    margin-bottom: 16px;
-}
-
-.cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 0 16px;
-    font-size: 17px;
-    font-weight: 400;
-    text-decoration: none;
-    color: var(--label);
-    background-color: transparent;
-    border: 1px solid var(--separator);
-    border-radius: 8px;
-    transition: background-color 0.2s ease;
-    flex: 1;
-    min-width: 0;
-    text-align: center;
-}
-
-.cta-button:hover {
-    background-color: var(--secondary-background);
-}
-
-@media (max-width: 640px) {
-    .cta-row {
-        flex-direction: column;
-    }
-    
-    .cta-button {
-        width: 100%;
-    }
-}
-
-/* GitHub link - plain text link, no blue */
+/* GitHub link - quiet, left-aligned */
 .github-link {
     font-size: 15px;
     line-height: 20px;
-    text-align: center;
+    margin-top: 16px;
 }
 
 .github-link a {
-    color: var(--label);
-    text-decoration: underline;
+    color: var(--secondary-label);
+    text-decoration: none;
 }
 
 .github-link a:hover {
-    color: var(--secondary-label);
+    text-decoration: underline;
 }
 
 /* Install section */
