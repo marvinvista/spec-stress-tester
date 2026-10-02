@@ -14,9 +14,9 @@
             <p class="subtitle">Turn a fuzzy PRD into decisions you can make in a sync.</p>
             
             <div class="cta-row">
-                <a href="#install-cursor" class="cta-button">Install in Cursor</a>
-                <a href="#install-codex" class="cta-button">Install in Codex</a>
-                <a href="#install-claude" class="cta-button">Install in Claude Code</a>
+                <a href="#install" class="cta-button" onclick="switchToTab('cursor', event)">Install in Cursor</a>
+                <a href="#install" class="cta-button" onclick="switchToTab('codex', event)">Install in Codex</a>
+                <a href="#install" class="cta-button" onclick="switchToTab('claude', event)">Install in Claude Code</a>
             </div>
             
             <p class="github-link">
@@ -28,12 +28,60 @@
         <section id="install" class="install-section">
             <h2>Install</h2>
             
-            <!-- Cursor -->
-            <div id="install-cursor" class="install-block">
-                <h3>Install in Cursor</h3>
+            <!-- Tab navigation -->
+            <div class="tab-nav" role="tablist">
+                <button class="tab-button active" role="tab" aria-selected="true" data-tab="cursor">Cursor</button>
+                <button class="tab-button" role="tab" aria-selected="false" data-tab="codex">Codex</button>
+                <button class="tab-button" role="tab" aria-selected="false" data-tab="claude">Claude Code</button>
+            </div>
+
+            <!-- Cursor tab -->
+            <div id="install-cursor" class="tab-content active">
                 <ol>
                     <li>Open <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a> in Cursor (Clone repo or open the folder).</li>
-                    <li>Copy <code>skills/spec-stress-tester/</code> into your project's <code>.cursor/skills/</code>.</li>
+                    <li>
+                        Copy the skill folder:
+                        <div class="path-copy-block">
+                            <code class="copy-path">skills/spec-stress-tester/</code>
+                            <span class="copy-arrow">→</span>
+                            <code class="copy-path">.cursor/skills/</code>
+                            <button class="copy-button" onclick="copyPath('skills/spec-stress-tester/', '.cursor/skills/', this)">Copy</button>
+                        </div>
+                    </li>
+                    <li>In chat, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
+                </ol>
+            </div>
+
+            <!-- Codex tab -->
+            <div id="install-codex" class="tab-content">
+                <ol>
+                    <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
+                    <li>
+                        Copy the skill folder:
+                        <div class="path-copy-block">
+                            <code class="copy-path">skills/spec-stress-tester/</code>
+                            <span class="copy-arrow">→</span>
+                            <code class="copy-path">.agents/skills/</code>
+                            <button class="copy-button" onclick="copyPath('skills/spec-stress-tester/', '.agents/skills/', this)">Copy</button>
+                        </div>
+                    </li>
+                    <li>In chat, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
+                </ol>
+            </div>
+
+            <!-- Claude Code tab -->
+            <div id="install-claude" class="tab-content">
+                <ol>
+                    <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
+                    <li>
+                        Copy the skill folder:
+                        <div class="path-copy-block">
+                            <code class="copy-path">skills/spec-stress-tester/</code>
+                            <span class="copy-arrow">→</span>
+                            <code class="copy-path">.claude/skills/</code>
+                            <button class="copy-button" onclick="copyPath('skills/spec-stress-tester/', '.claude/skills/', this)">Copy</button>
+                        </div>
+                    </li>
                     <li>In chat, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
                 </ol>
             </div>
@@ -44,106 +92,82 @@
             <h2>Sample decisions</h2>
             <p class="sample-intro">Each finding is a decision card, not an eng dump.</p>
             
-            <!-- Card 1 - Status map (compact) -->
-            <div class="decision-card">
-                <div class="card-field">
-                    <div class="field-label">Severity</div>
-                    <div class="field-value">P0 · Decide this week</div>
-                </div>
+            <div class="decision-group">
+                <h3 class="group-heading">Decide this week</h3>
                 
-                <div class="card-field">
-                    <div class="field-label">Decision</div>
-                    <div class="field-value decision-text">Freeze the customer-facing enum and when Paid means (rail accepted vs bank landed).</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Done-when</div>
-                    <div class="field-value">Table of API state → UI status + copy keys in the PRD</div>
-                </div>
-                
-                <div class="card-details" id="card-1-details">
-                    <div class="card-field">
-                        <div class="field-label">What's wrong</div>
-                        <div class="field-value">Pending/Processing/Paid/Failed/On hold? with no backend map.</div>
+                <!-- Decision row 1 -->
+                <div class="decision-row">
+                    <div class="row-summary" onclick="toggleRow('row-1')">
+                        <span class="row-severity">P0</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-decision">Freeze the customer-facing enum and when Paid means (rail accepted vs bank landed).</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-done">Table of API state → UI status + copy keys in the PRD</span>
                     </div>
-                    
-                    <div class="card-field">
-                        <div class="field-label">Default</div>
-                        <div class="field-value">Pending → Processing → Paid (landed) → Failed; drop On hold from v1 or fold into Failed+reason.</div>
-                    </div>
-                    
-                    <div class="card-field">
-                        <div class="field-label">Who</div>
-                        <div class="field-value">Eng (payments) + Product</div>
+                    <div class="row-details" id="row-1">
+                        <div class="detail-field">
+                            <span class="detail-label">What's wrong:</span>
+                            <span class="detail-value">Pending/Processing/Paid/Failed/On hold? with no backend map.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Default:</span>
+                            <span class="detail-value">Pending → Processing → Paid (landed) → Failed; drop On hold from v1 or fold into Failed+reason.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Who:</span>
+                            <span class="detail-value">Eng (payments) + Product</span>
+                        </div>
                     </div>
                 </div>
                 
-                <button class="show-more" onclick="toggleDetails('card-1-details', this)">Show more details</button>
-            </div>
-            
-            <!-- Card 2 - Who can see money -->
-            <div class="decision-card">
-                <div class="card-field">
-                    <div class="field-label">Severity</div>
-                    <div class="field-value">P0 · Decide this week</div>
+                <!-- Decision row 2 -->
+                <div class="decision-row">
+                    <div class="row-summary" onclick="toggleRow('row-2')">
+                        <span class="row-severity">P0</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-decision">Role matrix for amounts and property scope.</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-done">Role × capability table in the PRD</span>
+                    </div>
+                    <div class="row-details" id="row-2">
+                        <div class="detail-field">
+                            <span class="detail-label">What's wrong:</span>
+                            <span class="detail-value">Front-desk vs finance, multi-property unclear.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Default:</span>
+                            <span class="detail-value">Finance sees amounts; property staff sees status only; portfolio = explicit property picker.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Who:</span>
+                            <span class="detail-value">Product + Auth/Partner Hub eng</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="card-field">
-                    <div class="field-label">Decision</div>
-                    <div class="field-value decision-text">Role matrix for amounts and property scope.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Done-when</div>
-                    <div class="field-value">Role × capability table in the PRD</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">What's wrong</div>
-                    <div class="field-value">Front-desk vs finance, multi-property unclear.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Default</div>
-                    <div class="field-value">Finance sees amounts; property staff sees status only; portfolio = explicit property picker.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Who</div>
-                    <div class="field-value">Product + Auth/Partner Hub eng</div>
-                </div>
-            </div>
-            
-            <!-- Card 3 - History window -->
-            <div class="decision-card">
-                <div class="card-field">
-                    <div class="field-label">Severity</div>
-                    <div class="field-value">P0 · Decide this week</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Decision</div>
-                    <div class="field-value decision-text">Default list window + max retention.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Done-when</div>
-                    <div class="field-value">Numbers in Must-have #1</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">What's wrong</div>
-                    <div class="field-value">30 vs 90 days undecided.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Default</div>
-                    <div class="field-value">Last 90 days on page; older via export or Support.</div>
-                </div>
-                
-                <div class="card-field">
-                    <div class="field-label">Who</div>
-                    <div class="field-value">Product + Legal (retention)</div>
+                <!-- Decision row 3 -->
+                <div class="decision-row">
+                    <div class="row-summary" onclick="toggleRow('row-3')">
+                        <span class="row-severity">P0</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-decision">Default list window + max retention.</span>
+                        <span class="row-separator">·</span>
+                        <span class="row-done">Numbers in Must-have #1</span>
+                    </div>
+                    <div class="row-details" id="row-3">
+                        <div class="detail-field">
+                            <span class="detail-label">What's wrong:</span>
+                            <span class="detail-value">30 vs 90 days undecided.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Default:</span>
+                            <span class="detail-value">Last 90 days on page; older via export or Support.</span>
+                        </div>
+                        <div class="detail-field">
+                            <span class="detail-label">Who:</span>
+                            <span class="detail-value">Product + Legal (retention)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -154,26 +178,6 @@
             </div>
         </section>
 
-        <!-- Codex -->
-        <section id="install-codex" class="install-block">
-            <h3>Install in Codex</h3>
-            <ol>
-                <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
-                <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.agents/skills/</code> (Codex scans that path from CWD up to repo root).</li>
-                <li>In Codex, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
-            </ol>
-        </section>
-
-        <!-- Claude Code -->
-        <section id="install-claude" class="install-block">
-            <h3>Install in Claude Code</h3>
-            <ol>
-                <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
-                <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.claude/skills/</code>.</li>
-                <li>In Claude Code, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
-            </ol>
-        </section>
-
         <!-- Footer -->
         <footer class="footer">
             <p><a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a></p>
@@ -181,26 +185,87 @@
     </main>
 
     <script>
-        function toggleDetails(detailsId, button) {
-            const details = document.getElementById(detailsId);
-            const isHidden = details.style.display === 'none' || details.style.display === '';
+        // Tab switching
+        function switchToTab(tabName, event) {
+            if (event) {
+                event.preventDefault();
+            }
             
-            if (isHidden) {
-                details.style.display = 'block';
-                button.textContent = 'Show less details';
-            } else {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                const isActive = btn.dataset.tab === tabName;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive);
+            });
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === `install-${tabName}`);
+            });
+            
+            // Scroll to install section
+            document.getElementById('install').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Tab button click handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchToTab(btn.dataset.tab);
+                });
+            });
+            
+            // Hide row details by default
+            document.querySelectorAll('.row-details').forEach(details => {
                 details.style.display = 'none';
-                button.textContent = 'Show more details';
+            });
+        });
+        
+        // Decision row toggle
+        function toggleRow(rowId) {
+            const details = document.getElementById(rowId);
+            const isHidden = details.style.display === 'none' || details.style.display === '';
+            details.style.display = isHidden ? 'block' : 'none';
+        }
+        
+        // Copy path function
+        function copyPath(source, dest, button) {
+            const textToCopy = `${source} → ${dest}`;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopiedFeedback(button);
+                }).catch(() => {
+                    fallbackCopy(textToCopy, button);
+                });
+            } else {
+                fallbackCopy(textToCopy, button);
             }
         }
         
-        // Hide card details by default
-        document.addEventListener('DOMContentLoaded', function() {
-            const details = document.getElementById('card-1-details');
-            if (details) {
-                details.style.display = 'none';
+        function fallbackCopy(text, button) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopiedFeedback(button);
+            } catch (err) {
+                console.error('Copy failed:', err);
             }
-        });
+            document.body.removeChild(textarea);
+        }
+        
+        function showCopiedFeedback(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Copied';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
     </script>
 </body>
 </html>
