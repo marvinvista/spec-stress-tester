@@ -4,406 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spec stress-tester</title>
-    <style>
-        :root {
-            color-scheme: light dark;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-            font-size: 17px;
-            line-height: 1.294;
-            background: light-dark(#FFFFFF, #000000);
-            color: light-dark(#000000, #FFFFFF);
-            padding: 48px 20px;
-        }
-
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        section {
-            margin-bottom: 24px;
-        }
-
-        #install-other {
-            margin-top: 24px;
-        }
-
-        h1 {
-            font-size: 28px;
-            font-weight: 600;
-            line-height: 1.214;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 17px;
-            line-height: 1.294;
-            color: light-dark(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.6));
-            margin-bottom: 16px;
-        }
-
-        .cta-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            height: 44px;
-            padding: 0 16px;
-            font-size: 17px;
-            font-weight: 400;
-            line-height: 44px;
-            color: #FFFFFF;
-            background: #007AFF;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            cursor: pointer;
-            min-width: 44px;
-            text-align: center;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.8;
-        }
-
-        .btn-secondary {
-            display: inline-block;
-            height: 44px;
-            padding: 0 16px;
-            font-size: 17px;
-            font-weight: 400;
-            line-height: 42px;
-            color: light-dark(#000000, #FFFFFF);
-            background: transparent;
-            border: 1px solid light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
-            border-radius: 8px;
-            text-decoration: none;
-            cursor: pointer;
-            min-width: 44px;
-            text-align: center;
-        }
-
-        .btn-secondary:hover {
-            opacity: 0.8;
-        }
-
-        .link-secondary {
-            display: inline-block;
-            color: light-dark(#000000, #FFFFFF);
-            text-decoration: underline;
-            line-height: 1.294;
-        }
-
-        .link-secondary:hover {
-            opacity: 0.7;
-        }
-
-        h2 {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 1.25;
-            margin-bottom: 12px;
-        }
-
-        h3 {
-            font-size: 17px;
-            font-weight: 600;
-            line-height: 1.294;
-            margin-top: 16px;
-            margin-bottom: 8px;
-        }
-
-        h3:first-of-type {
-            margin-top: 0;
-        }
-
-        ol {
-            margin-left: 20px;
-            margin-bottom: 12px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        li:last-child {
-            margin-bottom: 0;
-        }
-
-        a {
-            color: #007AFF;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        code {
-            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-            font-size: 0.941em;
-        }
-
-        .note {
-            font-size: 15px;
-            line-height: 1.333;
-            color: light-dark(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.6));
-            margin-top: 12px;
-        }
-
-        .section-intro {
-            margin-bottom: 16px;
-        }
-
-        .card {
-            background: light-dark(#F2F2F7, #1C1C1E);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .card-field {
-            margin-bottom: 12px;
-        }
-
-        .card-field:last-child {
-            margin-bottom: 0;
-        }
-
-        .card-label {
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.385;
-            color: light-dark(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.6));
-            margin-bottom: 4px;
-        }
-
-        .card-value {
-            font-size: 15px;
-            line-height: 1.333;
-        }
-
-        .card-value.decision {
-            font-weight: 600;
-        }
-
-        .card-expanded {
-            margin-top: 12px;
-            display: none;
-        }
-
-        .card-expanded.show {
-            display: block;
-        }
-
-        .expand-btn {
-            display: inline-block;
-            margin-top: 4px;
-            padding: 12px 16px;
-            font-size: 15px;
-            color: #007AFF;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-decoration: underline;
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        .expand-btn:hover {
-            opacity: 0.7;
-        }
-
-        .spec-patch {
-            margin-top: 16px;
-            padding: 16px;
-            background: light-dark(#F2F2F7, #1C1C1E);
-            border-radius: 8px;
-        }
-
-        .spec-patch .card-label {
-            margin-bottom: 8px;
-        }
-
-        footer {
-            margin-top: 40px;
-            padding-top: 24px;
-            border-top: 1px solid light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #000000;
-                color: #FFFFFF;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <section id="hero">
-            <h1>Spec stress-tester</h1>
+    <main class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <h1 class="title">Spec stress-tester</h1>
             <p class="subtitle">Turn a fuzzy PRD into decisions you can make in a sync.</p>
-            <div class="cta-group">
-                <a href="#install-cursor" class="btn-primary">Install in Cursor</a>
-                <a href="#install-codex" class="btn-secondary">Install in Codex</a>
-                <a href="#install-claude" class="btn-secondary">Install in Claude Code</a>
+            
+            <div class="cta-row">
+                <a href="#install-cursor" class="cta-button">Install in Cursor</a>
+                <a href="#install-codex" class="cta-button">Install in Codex</a>
+                <a href="#install-claude" class="cta-button">Install in Claude Code</a>
             </div>
-            <a href="https://github.com/marvinvista/spec-stress-tester" class="link-secondary">View on GitHub</a>
+            
+            <p class="github-link">
+                <a href="https://github.com/marvinvista/spec-stress-tester">View on GitHub</a>
+            </p>
         </section>
 
-        <section id="install">
+        <!-- Install -->
+        <section id="install" class="install-section">
             <h2>Install</h2>
             
-            <h3 id="install-cursor">Cursor</h3>
+            <!-- Cursor -->
+            <div id="install-cursor" class="install-block">
+                <h3>Install in Cursor</h3>
+                <ol>
+                    <li>Open <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a> in Cursor (Clone repo or open the folder).</li>
+                    <li>Copy <code>skills/spec-stress-tester/</code> into your project's <code>.cursor/skills/</code>.</li>
+                    <li>In chat, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Sample decisions -->
+        <section class="sample-section">
+            <h2>Sample decisions</h2>
+            <p class="sample-intro">Each finding is a decision card, not an eng dump.</p>
+            
+            <!-- Card 1 - Status map (compact) -->
+            <div class="decision-card">
+                <div class="card-field">
+                    <div class="field-label">Severity</div>
+                    <div class="field-value">P0 · Decide this week</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Decision</div>
+                    <div class="field-value decision-text">Freeze the customer-facing enum and when Paid means (rail accepted vs bank landed).</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Done-when</div>
+                    <div class="field-value">Table of API state → UI status + copy keys in the PRD</div>
+                </div>
+                
+                <div class="card-details" id="card-1-details">
+                    <div class="card-field">
+                        <div class="field-label">What's wrong</div>
+                        <div class="field-value">Pending/Processing/Paid/Failed/On hold? with no backend map.</div>
+                    </div>
+                    
+                    <div class="card-field">
+                        <div class="field-label">Default</div>
+                        <div class="field-value">Pending → Processing → Paid (landed) → Failed; drop On hold from v1 or fold into Failed+reason.</div>
+                    </div>
+                    
+                    <div class="card-field">
+                        <div class="field-label">Who</div>
+                        <div class="field-value">Eng (payments) + Product</div>
+                    </div>
+                </div>
+                
+                <button class="show-more" onclick="toggleDetails('card-1-details', this)">Show more details</button>
+            </div>
+            
+            <!-- Card 2 - Who can see money -->
+            <div class="decision-card">
+                <div class="card-field">
+                    <div class="field-label">Severity</div>
+                    <div class="field-value">P0 · Decide this week</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Decision</div>
+                    <div class="field-value decision-text">Role matrix for amounts and property scope.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Done-when</div>
+                    <div class="field-value">Role × capability table in the PRD</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">What's wrong</div>
+                    <div class="field-value">Front-desk vs finance, multi-property unclear.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Default</div>
+                    <div class="field-value">Finance sees amounts; property staff sees status only; portfolio = explicit property picker.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Who</div>
+                    <div class="field-value">Product + Auth/Partner Hub eng</div>
+                </div>
+            </div>
+            
+            <!-- Card 3 - History window -->
+            <div class="decision-card">
+                <div class="card-field">
+                    <div class="field-label">Severity</div>
+                    <div class="field-value">P0 · Decide this week</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Decision</div>
+                    <div class="field-value decision-text">Default list window + max retention.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Done-when</div>
+                    <div class="field-value">Numbers in Must-have #1</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">What's wrong</div>
+                    <div class="field-value">30 vs 90 days undecided.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Default</div>
+                    <div class="field-value">Last 90 days on page; older via export or Support.</div>
+                </div>
+                
+                <div class="card-field">
+                    <div class="field-label">Who</div>
+                    <div class="field-value">Product + Legal (retention)</div>
+                </div>
+            </div>
+            
+            <!-- Spec patch -->
+            <div class="spec-patch">
+                <div class="field-label">Spec patch (paste back)</div>
+                <div class="field-value">freeze status enum+map; role matrix; set list=90 days.</div>
+            </div>
+        </section>
+
+        <!-- Codex -->
+        <section id="install-codex" class="install-block">
+            <h3>Install in Codex</h3>
             <ol>
-                <li>Open <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a> in Cursor (Clone repo or open the folder).</li>
-                <li>Copy <code>skills/spec-stress-tester/</code> into your project's <code>.cursor/skills/</code>.</li>
-                <li>In chat, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
+                <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
+                <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.agents/skills/</code> (Codex scans that path from CWD up to repo root).</li>
+                <li>In Codex, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
             </ol>
         </section>
 
-        <section id="samples">
-            <h2>Sample decisions</h2>
-            <p class="section-intro">Each finding is a decision card, not an eng dump.</p>
-
-            <div class="card">
-                <div class="card-field">
-                    <div class="card-label">Severity</div>
-                    <div class="card-value">P0 · Decide this week</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Decision</div>
-                    <div class="card-value decision">Freeze the customer-facing enum and when Paid means (rail accepted vs bank landed).</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Done-when</div>
-                    <div class="card-value">Table of API state → UI status + copy keys in the PRD</div>
-                </div>
-                <div class="card-expanded" id="card1-expanded">
-                    <div class="card-field">
-                        <div class="card-label">What's wrong</div>
-                        <div class="card-value">Pending/Processing/Paid/Failed/On hold? with no backend map.</div>
-                    </div>
-                    <div class="card-field">
-                        <div class="card-label">Default</div>
-                        <div class="card-value">Pending → Processing → Paid (landed) → Failed; drop On hold from v1 or fold into Failed+reason.</div>
-                    </div>
-                    <div class="card-field">
-                        <div class="card-label">Who</div>
-                        <div class="card-value">Eng (payments) + Product</div>
-                    </div>
-                </div>
-                <button class="expand-btn" onclick="toggleCard('card1')">Show more</button>
-            </div>
-
-            <section id="install-other">
-                <h3 id="install-codex">Codex</h3>
-                <ol>
-                    <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
-                    <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.agents/skills/</code> (Codex scans that path from CWD up to repo root).</li>
-                    <li>In Codex, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
-                </ol>
-
-                <h3 id="install-claude">Claude Code</h3>
-                <ol>
-                    <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
-                    <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.claude/skills/</code>.</li>
-                    <li>In Claude Code, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
-                </ol>
-            </section>
-
-            <div class="card">
-                <div class="card-field">
-                    <div class="card-label">Severity</div>
-                    <div class="card-value">P0 · Decide this week</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Decision</div>
-                    <div class="card-value decision">Role matrix for amounts and property scope.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Done-when</div>
-                    <div class="card-value">Role × capability table in the PRD</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">What's wrong</div>
-                    <div class="card-value">Front-desk vs finance, multi-property unclear.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Default</div>
-                    <div class="card-value">Finance sees amounts; property staff sees status only; portfolio = explicit property picker.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Who</div>
-                    <div class="card-value">Product + Auth/Partner Hub eng</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-field">
-                    <div class="card-label">Severity</div>
-                    <div class="card-value">P0 · Decide this week</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Decision</div>
-                    <div class="card-value decision">Default list window + max retention.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Done-when</div>
-                    <div class="card-value">Numbers in Must-have #1</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">What's wrong</div>
-                    <div class="card-value">30 vs 90 days undecided.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Default</div>
-                    <div class="card-value">Last 90 days on page; older via export or Support.</div>
-                </div>
-                <div class="card-field">
-                    <div class="card-label">Who</div>
-                    <div class="card-value">Product + Legal (retention)</div>
-                </div>
-            </div>
-
-            <div class="spec-patch">
-                <div class="card-label">Spec patch (paste back)</div>
-                <div class="card-value">Freeze status enum+map; role matrix; set list=90 days.</div>
-            </div>
+        <!-- Claude Code -->
+        <section id="install-claude" class="install-block">
+            <h3>Install in Claude Code</h3>
+            <ol>
+                <li>Clone or download <a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a>.</li>
+                <li>Copy <code>skills/spec-stress-tester/</code> into the project's <code>.claude/skills/</code>.</li>
+                <li>In Claude Code, ask: "Stress this PRD" and paste a PRD or Notion link.</li>
+            </ol>
         </section>
 
-        <footer>
-            <a href="https://github.com/marvinvista/spec-stress-tester">github.com/marvinvista/spec-stress-tester</a>
+        <!-- Footer -->
+        <footer class="footer">
+            <p><a href="https://github.com/marvinvista/spec-stress-tester">marvinvista/spec-stress-tester</a></p>
         </footer>
-    </div>
+    </main>
 
     <script>
-        function toggleCard(cardId) {
-            const expanded = document.getElementById(cardId + '-expanded');
-            const btn = event.target;
+        function toggleDetails(detailsId, button) {
+            const details = document.getElementById(detailsId);
+            const isHidden = details.style.display === 'none' || details.style.display === '';
             
-            if (expanded.classList.contains('show')) {
-                expanded.classList.remove('show');
-                btn.textContent = 'Show more';
+            if (isHidden) {
+                details.style.display = 'block';
+                button.textContent = 'Show less details';
             } else {
-                expanded.classList.add('show');
-                btn.textContent = 'Show less';
+                details.style.display = 'none';
+                button.textContent = 'Show more details';
             }
         }
+        
+        // Hide card details by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const details = document.getElementById('card-1-details');
+            if (details) {
+                details.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

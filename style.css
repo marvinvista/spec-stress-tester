@@ -1,0 +1,304 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Light mode colors (HIG semantic) */
+    --background: #FFFFFF;
+    --secondary-background: #F2F2F7;
+    --label: #000000;
+    --secondary-label: rgba(0, 0, 0, 0.6);
+    --separator: rgba(0, 0, 0, 0.12);
+    
+    /* Typography */
+    --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    
+    /* Spacing */
+    --page-padding: 20px;
+    --section-gap: 40px;
+    --card-gap: 16px;
+    --cta-gap: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #000000;
+        --secondary-background: #1C1C1E;
+        --label: #FFFFFF;
+        --secondary-label: rgba(255, 255, 255, 0.6);
+        --separator: rgba(255, 255, 255, 0.12);
+    }
+}
+
+body {
+    font-family: var(--font-system);
+    background-color: var(--background);
+    color: var(--label);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px var(--page-padding);
+}
+
+/* Hero section */
+.hero {
+    margin-bottom: var(--section-gap);
+}
+
+.title {
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 400;
+    color: var(--label);
+    margin-bottom: 24px;
+}
+
+/* CTA buttons - all three equal, bordered style */
+.cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--cta-gap);
+    margin-bottom: 16px;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 17px;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--label);
+    background-color: transparent;
+    border: 1px solid var(--separator);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.cta-button:hover {
+    background-color: var(--secondary-background);
+}
+
+@media (max-width: 640px) {
+    .cta-row {
+        flex-direction: column;
+    }
+    
+    .cta-button {
+        width: 100%;
+    }
+}
+
+/* GitHub link - plain text link, no blue */
+.github-link {
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.github-link a {
+    color: var(--label);
+    text-decoration: underline;
+}
+
+.github-link a:hover {
+    color: var(--secondary-label);
+}
+
+/* Install section */
+.install-section {
+    margin-bottom: var(--section-gap);
+}
+
+.install-section h2 {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.install-block {
+    margin-bottom: var(--section-gap);
+}
+
+.install-block h3 {
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.install-block ol {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.install-block li {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.install-block a {
+    color: var(--label);
+    text-decoration: underline;
+}
+
+.install-block a:hover {
+    color: var(--secondary-label);
+}
+
+.install-block code {
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    background-color: var(--secondary-background);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Sample section */
+.sample-section {
+    margin-bottom: var(--section-gap);
+}
+
+.sample-section h2 {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.sample-intro {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+
+/* Decision cards */
+.decision-card {
+    background-color: var(--secondary-background);
+    border: 1px solid var(--separator);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: var(--card-gap);
+}
+
+.card-field {
+    margin-bottom: 12px;
+}
+
+.card-field:last-child {
+    margin-bottom: 0;
+}
+
+.field-label {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--secondary-label);
+    margin-bottom: 4px;
+}
+
+.field-value {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.decision-text {
+    font-weight: 600;
+}
+
+/* Card details (initially hidden) */
+.card-details {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--separator);
+}
+
+/* Show more button - no blue */
+.show-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--label);
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 8px;
+    font-family: var(--font-system);
+}
+
+.show-more:hover {
+    color: var(--secondary-label);
+}
+
+/* Spec patch */
+.spec-patch {
+    background-color: var(--secondary-background);
+    border: 1px solid var(--separator);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: var(--card-gap);
+}
+
+/* Footer */
+.footer {
+    margin-top: calc(var(--section-gap) * 2);
+    padding-top: var(--section-gap);
+    border-top: 1px solid var(--separator);
+    text-align: center;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.footer a {
+    color: var(--label);
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    color: var(--secondary-label);
+}
+
+/* Ensure all links follow the no-blue pattern */
+a {
+    transition: color 0.2s ease;
+}
+
+/* Tight spacing for fold optimization */
+@media (min-width: 1280px) and (min-height: 800px) {
+    .hero {
+        margin-bottom: 24px;
+    }
+    
+    .install-section {
+        margin-bottom: 24px;
+    }
+}
